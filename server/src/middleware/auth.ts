@@ -8,7 +8,7 @@ export interface AuthRequest extends Request {
 
 export const auth = async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
-    const token = req.header('Authorization')?.replace('Bearer ', '');
+    const token = req.get('Authorization')?.replace('Bearer ', '');
     
     if (!token) {
       return res.status(401).json({ message: 'Access denied. No token provided.' });
