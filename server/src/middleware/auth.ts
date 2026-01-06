@@ -6,9 +6,10 @@ export interface AuthRequest extends Request {
   user?: IUser;
 }
 
-export const auth = async (req: AuthRequest, res: Response, next: NextFunction) => {
+export const auth = async (req: any, res: Response, next: NextFunction) => {
   try {
-    const token = req.get('Authorization')?.replace('Bearer ', '');
+    const authHeader = req.headers.authorization;
+    const token = authHeader?.replace('Bearer ', '');
     
     if (!token) {
       return res.status(401).json({ message: 'Access denied. No token provided.' });
@@ -36,7 +37,7 @@ export const auth = async (req: AuthRequest, res: Response, next: NextFunction) 
 export { auth as authenticate };
 
 export const authorize = (...roles: string[]) => {
-  return (req: AuthRequest, res: Response, next: NextFunction) => {
+  return (req: any, res: Response, next: NextFunction) => {
     if (!req.user) {
       return res.status(401).json({ message: 'Access denied.' });
     }
