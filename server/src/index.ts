@@ -33,9 +33,11 @@ const corsOptions = {
     ? [
         'https://shambil-pride-academy.vercel.app',
         'https://shambilprideacademy.edu.ng',
+        process.env.FRONTEND_URL, // For split deployment
         /\.vercel\.app$/,
-        /\.netlify\.app$/
-      ]
+        /\.netlify\.app$/,
+        /\.onrender\.com$/
+      ].filter(Boolean) // Remove undefined values
     : true, // Allow all origins in development
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],

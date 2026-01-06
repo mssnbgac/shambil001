@@ -11,20 +11,14 @@ const getApiBaseUrl = (): string => {
   const nodeEnv = process.env.NODE_ENV;
   
   if (nodeEnv === 'production') {
-    // For Vercel deployment - use current domain
-    if (typeof window !== 'undefined') {
-      // Browser environment - use current domain
-      return `${window.location.origin}/api`;
-    }
-    
-    // For custom domain (set via environment variable)
+    // For separate deployment (Frontend: Vercel, Backend: Render)
     const customApiUrl = process.env.REACT_APP_API_URL;
     if (customApiUrl) {
       return customApiUrl;
     }
     
-    // Default production URL (fallback)
-    return '/api';
+    // Default production URL - will be set via environment variable
+    return 'https://your-backend-url.onrender.com/api';
   }
   
   // Development environment

@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: shambil-academy-backend
+    env: node
+    plan: free
+    buildCommand: cd server && npm install && npm run build
+    startCommand: cd server && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        value: shambil_pride_academy_jwt_secret_key_2024_birnin_gwari_production
+      - key: PORT
+        value: 4000
+      - key: SCHOOL_NAME
+        value: Shambil Pride Academy Birnin Gwari
+      - key: SCHOOL_ADDRESS
+        value: Birnin Gwari, Kaduna State, Nigeria
+      - key: SCHOOL_EMAIL
+        value: info@shambilprideacademy.edu.ng
+    healthCheckPath: /api/health
