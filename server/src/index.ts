@@ -1108,15 +1108,6 @@ app.get('/api/comments/stats', async (req, res) => {
   }
 });
 
-// Health check
-app.get('/api/health', (req, res) => {
-  res.json({ 
-    message: 'Shambil Pride Academy Birnin Gwari Management API is running with SQLite!',
-    database: 'SQLite',
-    timestamp: new Date().toISOString()
-  });
-});
-
 // Dashboard stats (real data from database)
 app.get('/api/dashboard/stats', async (req, res) => {
   try {
