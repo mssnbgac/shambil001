@@ -1,0 +1,37 @@
+{
+  "name": "shambil-pride-academy-management-system",
+  "version": "1.0.0",
+  "description": "Complete School Management System for Shambil Pride Academy Birnin Gwari",
+  "main": "server/src/index.ts",
+  "scripts": {
+    "dev": "concurrently \"cd server && npm run dev-sqlite\" \"cd client && npm start\"",
+    "build": "cd client && npm install && npm run build && cd ../server && npm install && npm run build",
+    "start": "cd server && npm start",
+    "start:production": "cd server && npm run start:production",
+    "heroku-postbuild": "cd client && npm install && npm run build && cd ../server && npm install && npm run build",
+    "install:all": "cd server && npm install && cd ../client && npm install",
+    "test": "cd server && npm test && cd ../client && npm test"
+  },
+  "keywords": [
+    "school-management",
+    "education",
+    "nigeria",
+    "react",
+    "nodejs",
+    "typescript",
+    "sqlite"
+  ],
+  "author": "Shambil Pride Academy",
+  "license": "MIT",
+  "engines": {
+    "node": "18.x",
+    "npm": "9.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/shambil-pride-academy.git"
+  },
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  }
+}
