@@ -72,12 +72,29 @@ app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/parents', parentsRoutes);
 // app.use('/api/students', sqliteStudentsRoutes);
 
+// Root route for debugging
+app.get('/', (req, res) => {
+  res.json({
+    message: 'Shambil Pride Academy Backend API',
+    status: 'running',
+    endpoints: {
+      health: '/api/health',
+      auth: '/api/auth/*',
+      students: '/api/students/*',
+      classes: '/api/classes/*',
+      subjects: '/api/subjects/*'
+    },
+    note: 'This is the backend API only. Frontend will be deployed separately on Vercel.'
+  });
+});
+
 // Health check endpoint
 app.get('/api/health', (req, res) => {
   res.json({ 
     status: 'OK', 
     message: 'Shambil Pride Academy Server is running',
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
+    database: 'SQLite connected'
   });
 });
 
