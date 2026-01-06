@@ -64,11 +64,6 @@ if (process.env.NODE_ENV === 'production') {
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
-// Serve static files in production
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../../client/build')));
-}
-
 // Routes
 app.use('/api/auth', sqliteAuthRoutes);
 app.use('/api/classes', classesRoutes);
@@ -8042,24 +8037,13 @@ app.get('/api/dashboard/exam-officer/current', async (req, res) => {
   }
 });
 
-// Catch-all handler for production (serve React app)
-if (process.env.NODE_ENV === 'production') {
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../client/build/index.html'));
-  });
-}
-
 // Start the server
 app.listen(PORT, () => {
-  console.log(`🚀 Shambil Pride Academy Birnin Gwari Management Server running on port ${PORT} - UNIFIED SERVER`);
+  console.log(`🚀 Shambil Pride Academy Birnin Gwari Management Server running on port ${PORT} - API ONLY`);
   console.log(`📊 Using SQLite Database (No MongoDB required!)`);
-  if (process.env.NODE_ENV === 'production') {
-    console.log(`🌐 Production Mode: Serving React app from /`);
-    console.log(`🔗 API Endpoints: /api/*`);
-  } else {
-    console.log(`🌐 Frontend: http://localhost:3002`);
-    console.log(`🔗 Backend: http://localhost:${PORT}`);
-  }
+  console.log(`🌐 Backend API ready for frontend connection`);
+  console.log(`🔗 API Endpoints: /api/*`);
+  console.log(`💡 Frontend will be deployed separately on Vercel`);
   console.log(`🏫 This is SHAMBIL PRIDE ACADEMY - NOT Kowa High School!`);
 });
 
