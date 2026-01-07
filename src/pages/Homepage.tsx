@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext.tsx';
+import API_BASE_URL from '../config/api';
 
 interface SchoolContent {
   _id: string;
@@ -26,7 +27,7 @@ const Homepage: React.FC = () => {
 
   const fetchContent = async () => {
     try {
-      const response = await axios.get('/school-content');
+      const response = await axios.get(`${API_BASE_URL}/school-content`);
       setContent(response.data);
       setEditContent(response.data);
     } catch (error) {
@@ -38,7 +39,7 @@ const Homepage: React.FC = () => {
 
   const handleSaveContent = async () => {
     try {
-      await axios.put('/school-content', editContent);
+      await axios.put(`${API_BASE_URL}/school-content`, editContent);
       setContent(editContent);
       setIsEditing(false);
       
