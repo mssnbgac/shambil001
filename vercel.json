@@ -20,10 +20,5 @@
   ],
   "env": {
     "REACT_APP_API_URL": "https://shambil001.onrender.com/api"
-  },
-  "functions": {
-    "client/build/**": {
-      "maxDuration": 10
-    }
   }
 }
