@@ -1,0 +1,9 @@
+{
+  "short_name": "Shambil Pride Academy",
+  "name": "Shambil Pride Academy Management System",
+  "icons": [],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
