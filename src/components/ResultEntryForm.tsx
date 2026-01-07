@@ -5,6 +5,8 @@ import { PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
 import StudentSearch from './StudentSearch.tsx';
 import { academicSessions } from '../utils/academicSessions.ts';
 
+import API_BASE_URL from '../config/api';
+
 interface Subject {
   _id: string;
   name: string;
@@ -71,13 +73,13 @@ const ResultEntryForm: React.FC<ResultEntryFormProps> = ({
 
   const { data: subjects } = useQuery<Subject[]>(
     'subjects',
-    () => axios.get('http://localhost:4000/api/subjects').then(res => res.data)
+    () => axios.get(`${API_BASE_URL}/subjects`).then(res => res.data)
   );
 
   // Fetch existing results for the selected student
   const { data: existingResults, refetch: refetchResults } = useQuery(
     ['studentResults', selectedStudent?._id, formData.academicYear, formData.term],
-    () => axios.get(`http://localhost:4000/api/results/student/${selectedStudent._id}?academicYear=${formData.academicYear}&term=${formData.term}`).then(res => res.data),
+    () => axios.get(`${API_BASE_URL}/results/student/${selectedStudent._id}?academicYear=${formData.academicYear}&term=${formData.term}`).then(res => res.data),
     {
       enabled: !!selectedStudent?._id && !!formData.academicYear && !!formData.term,
       retry: 1,
@@ -105,7 +107,7 @@ const ResultEntryForm: React.FC<ResultEntryFormProps> = ({
   );
 
   const submitResult = useMutation(
-    (data: any) => axios.post('http://localhost:4000/api/results', data),
+    (data: any) => axios.post(`${API_BASE_URL}/results`, data),
     {
       onSuccess: () => {
         queryClient.invalidateQueries('results');
