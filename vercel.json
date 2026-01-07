@@ -1,8 +1,9 @@
 {
   "version": 2,
-  "buildCommand": "node build-for-vercel.js",
+  "buildCommand": "npm run vercel-build",
   "outputDirectory": "build",
   "env": {
-    "REACT_APP_API_URL": "https://shambil001.onrender.com/api"
+    "REACT_APP_API_URL": "https://shambil001.onrender.com/api",
+    "CI": "false"
   }
 }
