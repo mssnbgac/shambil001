@@ -1,25 +1,9 @@
 {
   "version": 2,
   "name": "shambil-pride-academy",
-  "builds": [
-    {
-      "src": "client/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "build"
-      }
-    }
-  ],
-  "routes": [
-    {
-      "handle": "filesystem"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "client/build/index.html"
-    }
-  ],
-  "env": {
-    "REACT_APP_API_URL": "https://shambil001.onrender.com/api"
-  }
+  "buildCommand": "cd client && npm install && npm run build",
+  "outputDirectory": "client/build",
+  "installCommand": "cd client && npm install",
+  "devCommand": "cd client && npm start",
+  "framework": "create-react-app"
 }
