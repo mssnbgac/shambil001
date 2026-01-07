@@ -1,5 +1,6 @@
 # Ignore server files for frontend deployment
 server/
+client/
 .git/
 
 # Ignore environment files
