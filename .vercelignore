@@ -1,35 +1,18 @@
 # Ignore server files for frontend deployment
 server/
-*.md
 .git/
 node_modules/
+
+# Ignore environment files
 .env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
-# Ignore documentation and config files not needed for deployment
-DEPLOYMENT_*.md
-HOSTING_*.md
-BACKEND_*.md
-TYPESCRIPT_*.md
-CLASS_*.md
-RESULT_*.md
-NIGERIAN_*.md
-GITHUB_*.md
-FINAL_*.md
-QUICK_*.md
-READY_*.md
-REAL_*.md
-SYSTEM_*.md
-UNIFIED_*.md
-VERCEL_*.md
-PROJECT_*.md
-COMPLETE_*.md
-IMPLEMENTATION_*.md
-LOGIN_*.md
-HOMEPAGE_*.md
+# Ignore documentation files
+*.md
+!README.md
 
 # Ignore build scripts and deployment files for other platforms
 deploy.sh
@@ -43,6 +26,3 @@ Procfile
 *.backup
 *.bak
 *.tmp
-*-backup.*
-*-fixed.*
-*-unified.*
