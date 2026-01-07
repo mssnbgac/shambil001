@@ -1,13 +1,5 @@
 // API Configuration for different environments
 
-// Declare environment variables for TypeScript
-declare const process: {
-  env: {
-    NODE_ENV: 'development' | 'production' | 'test';
-    REACT_APP_API_URL?: string;
-  };
-};
-
 const getApiBaseUrl = (): string => {
   // Use React's built-in environment variable handling
   const nodeEnv = process.env.NODE_ENV;
