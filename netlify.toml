@@ -1,0 +1,12 @@
+[build]
+  base = "client"
+  command = "npm run build"
+  publish = "build"
+
+[build.environment]
+  REACT_APP_API_URL = "https://shambil001.onrender.com/api"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
