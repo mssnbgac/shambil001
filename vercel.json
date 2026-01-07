@@ -1,6 +1,5 @@
 {
   "version": 2,
-  "name": "shambil-pride-academy",
   "builds": [
     {
       "src": "client/package.json",
@@ -12,11 +11,19 @@
   ],
   "routes": [
     {
+      "handle": "filesystem"
+    },
+    {
       "src": "/(.*)",
       "dest": "client/build/index.html"
     }
   ],
   "env": {
     "REACT_APP_API_URL": "https://shambil001.onrender.com/api"
+  },
+  "functions": {
+    "client/build/**": {
+      "maxDuration": 10
+    }
   }
 }
