@@ -1,14 +1,6 @@
 # Ignore server files for frontend deployment
 server/
-client/
 .git/
-
-# Ignore environment files
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
 
 # Ignore documentation files
 *.md
@@ -21,8 +13,3 @@ build.sh
 render.yaml
 netlify.toml
 Procfile
-
-# Ignore backup and temporary files
-*.backup
-*.bak
-*.tmp
