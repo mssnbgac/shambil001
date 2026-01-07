@@ -88,6 +88,25 @@ app.get('/', (req, res) => {
   });
 });
 
+// API root route
+app.get('/api', (req, res) => {
+  res.json({
+    message: 'Shambil Pride Academy Backend API',
+    status: 'running',
+    version: '1.0.0',
+    endpoints: {
+      health: '/api/health',
+      auth: '/api/auth/*',
+      students: '/api/students/*',
+      classes: '/api/classes/*',
+      subjects: '/api/subjects/*',
+      dashboard: '/api/dashboard/*',
+      parents: '/api/parents/*'
+    },
+    note: 'This is the backend API only. Frontend will be deployed separately on Vercel.'
+  });
+});
+
 // Health check endpoint
 app.get('/api/health', (req, res) => {
   res.json({ 
