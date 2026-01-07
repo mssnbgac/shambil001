@@ -1,7 +1,6 @@
 # Ignore server files for frontend deployment
 server/
 .git/
-node_modules/
 
 # Ignore environment files
 .env
