@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
 import axios from 'axios';
 import { PlusIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import API_BASE_URL from '../config/api';
 
 // Configure axios base URL
 const api = axios.create({
-  baseURL: 'http://localhost:4000/api',
+  baseURL: API_BASE_URL,
 });
 
 const Teachers: React.FC = () => {
