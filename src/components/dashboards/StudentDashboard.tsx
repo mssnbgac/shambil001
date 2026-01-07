@@ -3,9 +3,11 @@ import { useQuery } from 'react-query';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
+import API_BASE_URL from '../../config/api';
+
 // Configure axios base URL
 const api = axios.create({
-  baseURL: 'http://localhost:4000/api',
+  baseURL: API_BASE_URL,
 });
 
 // Add authentication interceptor

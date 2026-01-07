@@ -14,9 +14,11 @@ import {
 } from '@heroicons/react/24/outline';
 import axios from 'axios';
 
+import API_BASE_URL from '../../config/api';
+
 // Create axios instance
 const api = axios.create({
-  baseURL: 'http://localhost:4000',
+  baseURL: API_BASE_URL.replace('/api', ''),
 });
 
 // Add token to requests if available

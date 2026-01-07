@@ -1,12 +1,14 @@
 import axios from 'axios';
 
 // Create axios instance with base configuration
-const API_BASE_URL = process.env.NODE_ENV === 'production' 
-  ? '/api'  // Use relative path for Vercel deployment
+import API_BASE_URL from '../config/api';
+
+const API_BASE_URL_UTILS = process.env.NODE_ENV === 'production' 
+  ? API_BASE_URL  // Use dynamic API URL
   : 'http://localhost:4000/api';
 
 const api = axios.create({
-  baseURL: API_BASE_URL,
+  baseURL: API_BASE_URL_UTILS,
   timeout: 10000,
 });
 
