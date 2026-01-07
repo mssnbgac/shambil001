@@ -1,17 +1,13 @@
 // API Configuration for different environments
 
 const getApiBaseUrl = (): string => {
-  // Use React's built-in environment variable handling
-  const nodeEnv = process.env.NODE_ENV;
+  // Simple environment detection without process.env
+  const isProduction = window.location.hostname !== 'localhost' && 
+                      window.location.hostname !== '127.0.0.1' &&
+                      !window.location.hostname.includes('localhost');
   
-  if (nodeEnv === 'production') {
-    // For separate deployment (Frontend: Vercel, Backend: Render)
-    const customApiUrl = process.env.REACT_APP_API_URL;
-    if (customApiUrl) {
-      return customApiUrl;
-    }
-    
-    // Default production URL - Backend is deployed on Render
+  if (isProduction) {
+    // Production environment - Backend is deployed on Render
     return 'https://shambil001.onrender.com/api';
   }
   
