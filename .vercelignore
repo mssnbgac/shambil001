@@ -1,5 +1,2 @@
 server/
-client/
 .git/
-*.md
-!README.md
