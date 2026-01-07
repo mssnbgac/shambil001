@@ -1,5 +1,8 @@
 {
   "version": 2,
   "buildCommand": "node build-for-vercel.js",
-  "outputDirectory": "build"
+  "outputDirectory": "build",
+  "env": {
+    "REACT_APP_API_URL": "https://shambil001.onrender.com/api"
+  }
 }

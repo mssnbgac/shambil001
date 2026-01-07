@@ -5,6 +5,7 @@ const path = require('path');
 const { execSync } = require('child_process');
 
 console.log('🚀 Starting Vercel build process...');
+console.log('🕐 Build timestamp:', new Date().toISOString());
 console.log('📁 Current working directory:', process.cwd());
 
 // List all files in current directory
