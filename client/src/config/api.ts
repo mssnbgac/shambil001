@@ -1,11 +1,4 @@
 // API Configuration for different environments
-declare const process: {
-  env: {
-    NODE_ENV: string;
-    REACT_APP_API_URL?: string;
-  };
-};
-
 const getApiBaseUrl = (): string => {
   // Use React's built-in environment variable handling
   const nodeEnv = process.env.NODE_ENV;
@@ -17,8 +10,8 @@ const getApiBaseUrl = (): string => {
       return customApiUrl;
     }
     
-    // Default production URL - will be set via environment variable
-    return 'https://your-backend-url.onrender.com/api';
+    // Default production URL - Backend is deployed on Render
+    return 'https://shambil001.onrender.com/api';
   }
   
   // Development environment
