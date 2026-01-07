@@ -11,17 +11,8 @@
   ],
   "routes": [
     {
-      "handle": "filesystem"
-    },
-    {
       "src": "/(.*)",
       "dest": "client/build/index.html"
     }
-  ],
-  "env": {
-    "REACT_APP_API_URL": "https://shambil001.onrender.com/api"
-  },
-  "installCommand": "cd client && npm install",
-  "buildCommand": "cd client && npm run build",
-  "outputDirectory": "client/build"
+  ]
 }
