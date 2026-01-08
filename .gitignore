@@ -162,3 +162,4 @@ server/data/school-content.json
 # Uncomment the one you DON'T use:
 # package-lock.json
 # yarn.lock
+.vercel
