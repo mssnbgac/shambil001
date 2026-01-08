@@ -9,9 +9,9 @@ import {
   ChartBarIcon,
   AcademicCapIcon
 } from '@heroicons/react/24/outline';
-import api from '../utils/api.ts';
-import { academicSessions, getCurrentSession } from '../utils/academicSessions.ts';
-import ResultEntryForm from '../components/ResultEntryForm.tsx';
+import api from '../utils/api';
+import { academicSessions, getCurrentSession } from '../utils/academicSessions';
+import ResultEntryForm from '../components/ResultEntryForm';
 
 interface Result {
   id: number;

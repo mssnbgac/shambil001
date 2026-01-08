@@ -1,9 +1,16 @@
 {
   "version": 2,
-  "buildCommand": "npm run vercel-build",
-  "outputDirectory": "build",
+  "buildCommand": "cd client && CI=false npm run build",
+  "outputDirectory": "client/build",
   "env": {
     "REACT_APP_API_URL": "https://shambil001.onrender.com/api",
-    "CI": "false"
-  }
+    "CI": "false",
+    "GENERATE_SOURCEMAP": "false"
+  },
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
 }

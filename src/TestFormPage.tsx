@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ResultEntryForm from './components/ResultEntryForm.tsx';
+import ResultEntryForm from './components/ResultEntryForm';
 
 const TestFormPage: React.FC = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);

@@ -15,10 +15,10 @@ import {
   PaperAirplaneIcon,
   HomeIcon
 } from '@heroicons/react/24/outline';
-import StudentSearch from '../StudentSearch.tsx';
-import ResultEntryForm from '../ResultEntryForm.tsx';
-import { academicSessions, getCurrentSession } from '../../utils/academicSessions.ts';
-import api from '../../utils/api.ts';
+import StudentSearch from '../StudentSearch';
+import ResultEntryForm from '../ResultEntryForm';
+import { academicSessions, getCurrentSession } from '../../utils/academicSessions';
+import api from '../../utils/api';
 
 interface DashboardStats {
   totalStudents: number;

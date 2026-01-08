@@ -2,19 +2,18 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Toaster } from 'react-hot-toast';
-import { AuthProvider, useAuth } from './contexts/AuthContext.tsx';
-import Layout from './components/Layout.tsx';
-import Login from './pages/Login.tsx';
-import Dashboard from './pages/Dashboard.tsx';
-import Homepage from './pages/Homepage.tsx';
-import Students from './pages/Students.tsx';
-import Teachers from './pages/Teachers.tsx';
-import Classes from './pages/Classes.tsx';
-import Attendance from './pages/Attendance.tsx';
-import Grades from './pages/Grades.tsx';
-import Fees from './pages/Fees.tsx';
-import Profile from './pages/Profile.tsx';
-import TestFormPage from './TestFormPage.tsx';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
+import Layout from './components/Layout';
+import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
+import Homepage from './pages/Homepage';
+import Students from './pages/Students';
+import Teachers from './pages/Teachers';
+import Classes from './pages/Classes';
+import Attendance from './pages/Attendance';
+import Grades from './pages/Grades';
+import Fees from './pages/Fees';
+import Profile from './pages/Profile';
 import './index.css';
 
 const queryClient = new QueryClient({
@@ -31,23 +30,38 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
   
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary-600"></div>
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading Shambil Pride Academy...</p>
+        </div>
       </div>
     );
   }
   
-  return user ? <>{children}</> : <Navigate to="/login" />;
+  return user ? <>{children}</> : <Navigate to="/login" replace />;
 };
 
 const AppRoutes: React.FC = () => {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
+
+  // Show loading screen while checking authentication
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading Shambil Pride Academy...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <Routes>
       <Route path="/homepage" element={<Homepage />} />
-      <Route path="/login" element={!user ? <Login /> : <Navigate to="/dashboard" />} />
-      <Route path="/" element={user ? <Navigate to="/dashboard" /> : <Navigate to="/homepage" />} />
+      <Route path="/login" element={!user ? <Login /> : <Navigate to="/dashboard" replace />} />
+      <Route path="/" element={user ? <Navigate to="/dashboard" replace /> : <Navigate to="/homepage" replace />} />
       <Route
         path="/*"
         element={
@@ -62,12 +76,15 @@ const AppRoutes: React.FC = () => {
                 <Route path="/grades/*" element={<Grades />} />
                 <Route path="/fees/*" element={<Fees />} />
                 <Route path="/profile" element={<Profile />} />
-                <Route path="/test-form" element={<TestFormPage />} />
+                {/* Catch all route for authenticated users */}
+                <Route path="*" element={<Navigate to="/dashboard" replace />} />
               </Routes>
             </Layout>
           </ProtectedRoute>
         }
       />
+      {/* Catch all route for unauthenticated users */}
+      <Route path="*" element={<Navigate to="/homepage" replace />} />
     </Routes>
   );
 };

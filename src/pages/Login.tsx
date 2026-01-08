@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext.tsx';
+import { useAuth } from '../contexts/AuthContext';
+import toast from 'react-hot-toast';
 import { EyeIcon, EyeSlashIcon, AcademicCapIcon, UserGroupIcon, BookOpenIcon } from '@heroicons/react/24/outline';
 
 const Login: React.FC = () => {
@@ -22,6 +23,12 @@ const Login: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!formData.email || !formData.password) {
+      toast.error('Please enter both email and password');
+      return;
+    }
+    
     setLoading(true);
     
     try {
@@ -30,6 +37,19 @@ const Login: React.FC = () => {
       // Error is handled by the auth context
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fillDemoCredentials = (role: string) => {
+    const credentials = {
+      admin: { email: 'admin@shambil.edu.ng', password: 'admin123' },
+      parent: { email: 'enginboy20@gmail.com', password: '123456' },
+      teacher: { email: 'teacher@shambil.edu.ng', password: 'teacher123' }
+    };
+    
+    const cred = credentials[role as keyof typeof credentials];
+    if (cred) {
+      setFormData(cred);
     }
   };
 
@@ -150,6 +170,35 @@ const Login: React.FC = () => {
               <AcademicCapIcon className="h-4 w-4 mr-1" />
               Visit School Homepage
             </Link>
+          </div>
+
+          {/* Demo Credentials */}
+          <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+            <h3 className="text-sm font-semibold text-blue-800 mb-3 text-center">Demo Accounts</h3>
+            <div className="space-y-2">
+              <button
+                type="button"
+                onClick={() => fillDemoCredentials('admin')}
+                className="w-full text-left px-3 py-2 text-xs bg-white rounded border hover:bg-blue-50 transition-colors"
+              >
+                <span className="font-medium text-blue-700">Admin:</span> admin@shambil.edu.ng
+              </button>
+              <button
+                type="button"
+                onClick={() => fillDemoCredentials('parent')}
+                className="w-full text-left px-3 py-2 text-xs bg-white rounded border hover:bg-blue-50 transition-colors"
+              >
+                <span className="font-medium text-green-700">Parent:</span> enginboy20@gmail.com
+              </button>
+              <button
+                type="button"
+                onClick={() => fillDemoCredentials('teacher')}
+                className="w-full text-left px-3 py-2 text-xs bg-white rounded border hover:bg-blue-50 transition-colors"
+              >
+                <span className="font-medium text-purple-700">Teacher:</span> teacher@shambil.edu.ng
+              </button>
+            </div>
+            <p className="text-xs text-blue-600 mt-2 text-center">Click any account to auto-fill credentials</p>
           </div>
         </div>
       </div>

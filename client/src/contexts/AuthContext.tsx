@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
@@ -7,14 +7,7 @@ interface User {
   firstName: string;
   lastName: string;
   email: string;
-  role: 'admin' | 'director' | 'principal' | 'teacher' | 'student' | 'parent' | 'accountant' | 'exam_officer';
-  phone?: string;
-  avatar?: string;
-  // Student-specific fields
-  admissionNumber?: string;
-  className?: string;
-  classLevel?: string;
-  house?: string;
+  role: string;
 }
 
 interface AuthContextType {
@@ -22,16 +15,19 @@ interface AuthContextType {
   loading: boolean;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
-  updateProfile: (data: Partial<User>) => Promise<void>;
+  updateProfile: (data: any) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// Set up axios defaults - point to backend server
-const API_BASE_URL = 'http://localhost:4000/api';
-axios.defaults.baseURL = API_BASE_URL;
+// Simple API URL detection for production
+const API_URL = typeof window !== 'undefined' && window.location.hostname === 'localhost' 
+  ? 'http://localhost:4000/api' 
+  : 'https://shambil001.onrender.com/api';
 
-// Add token to requests
+axios.defaults.baseURL = API_URL;
+
+// Add request interceptor for authentication
 axios.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
   if (token) {
@@ -40,19 +36,21 @@ axios.interceptors.request.use((config) => {
   return config;
 });
 
-// Handle token expiration
+// Add response interceptor for error handling
 axios.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
       localStorage.removeItem('token');
-      window.location.href = '/login';
+      if (typeof window !== 'undefined' && window.location.pathname !== '/login') {
+        window.location.href = '/login';
+      }
     }
     return Promise.reject(error);
   }
 );
 
-export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -85,7 +83,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       setUser(userData);
       toast.success(`Welcome back, ${userData.firstName}!`);
     } catch (error: any) {
-      const message = error.response?.data?.message || 'Login failed';
+      let message = 'Login failed. Please try again.';
+      
+      if (error.response?.status === 401) {
+        message = 'Invalid email or password.';
+      } else if (error.response?.data?.message) {
+        message = error.response.data.message;
+      }
+      
       toast.error(message);
       throw error;
     }
@@ -97,7 +102,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     toast.success('Logged out successfully');
   };
 
-  const updateProfile = async (data: Partial<User>) => {
+  const updateProfile = async (data: any) => {
     try {
       const response = await axios.put('/auth/profile', data);
       setUser(response.data.user);
@@ -109,20 +114,16 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   };
 
-  const value = {
-    user,
-    loading,
-    login,
-    logout,
-    updateProfile,
-  };
-
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ user, loading, login, logout, updateProfile }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (context === undefined) {
+  if (!context) {
     throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;

@@ -19,9 +19,11 @@ import {
 } from '@heroicons/react/24/outline';
 // import ResultEntryForm from '../ResultEntryForm';
 
+import API_BASE_URL from '../../config/api';
+
 // Configure axios instances
 const api = axios.create({
-  baseURL: 'http://localhost:4000/api',
+  baseURL: API_BASE_URL,
 });
 
 // Add token interceptor to api instance
@@ -34,7 +36,7 @@ api.interceptors.request.use((config) => {
 });
 
 const dashboardApi = axios.create({
-  baseURL: 'http://localhost:4000/api',
+  baseURL: API_BASE_URL,
 });
 
 // Reports Management View Component

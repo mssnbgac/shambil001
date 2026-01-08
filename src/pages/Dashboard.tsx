@@ -1,10 +1,10 @@
 import React from 'react';
-import { useAuth } from '../contexts/AuthContext.tsx';
-import AdminDashboard from '../components/dashboards/AdminDashboard.tsx';
-import StudentDashboard from '../components/dashboards/StudentDashboard.tsx';
-import ExamOfficerDashboard from '../components/dashboards/ExamOfficerDashboard.tsx';
-import ParentDashboard from '../components/dashboards/ParentDashboard.tsx';
-import TeacherDashboard from '../components/dashboards/TeacherDashboard.tsx';
+import { useAuth } from '../contexts/AuthContext';
+import AdminDashboard from '../components/dashboards/AdminDashboard';
+import StudentDashboard from '../components/dashboards/StudentDashboard';
+import ExamOfficerDashboard from '../components/dashboards/ExamOfficerDashboard';
+import ParentDashboard from '../components/dashboards/ParentDashboard';
+import TeacherDashboard from '../components/dashboards/TeacherDashboard';
 import API_BASE_URL from '../config/api';
 
 // Type definitions

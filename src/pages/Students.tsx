@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
 import axios from 'axios';
 import { PlusIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
-import StudentSearch from '../components/StudentSearch.tsx';
+import StudentSearch from '../components/StudentSearch';
 import API_BASE_URL from '../config/api';
 
 // Configure axios base URL

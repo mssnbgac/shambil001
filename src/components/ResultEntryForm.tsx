@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import axios from 'axios';
 import { PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
-import StudentSearch from './StudentSearch.tsx';
-import { academicSessions } from '../utils/academicSessions.ts';
+import StudentSearch from './StudentSearch';
+import { academicSessions } from '../utils/academicSessions';
 
 import API_BASE_URL from '../config/api';
 

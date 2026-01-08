@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { useAuth } from '../contexts/AuthContext.tsx';
+import { useAuth } from '../contexts/AuthContext';
+import API_BASE_URL from '../config/api';
 
 interface SchoolContent {
   _id: string;
@@ -16,6 +17,7 @@ const Homepage: React.FC = () => {
   const { user } = useAuth();
   const [content, setContent] = useState<any>({});
   const [loading, setLoading] = useState(true);
+  const [retrying, setRetrying] = useState(false);
   const [activeSection, setActiveSection] = useState('about');
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState<any>({});
@@ -24,21 +26,53 @@ const Homepage: React.FC = () => {
     fetchContent();
   }, []);
 
-  const fetchContent = async () => {
+  const fetchContent = async (retryCount = 0) => {
+    if (retryCount > 0) {
+      setRetrying(true);
+    }
+    
     try {
-      const response = await axios.get('/school-content');
+      const response = await axios.get(`${API_BASE_URL}/school-content`);
       setContent(response.data);
       setEditContent(response.data);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error fetching content:', error);
+      
+      // If it's a network error or 503 (service unavailable), retry up to 3 times
+      if (retryCount < 3 && (error.code === 'NETWORK_ERROR' || error.response?.status === 503)) {
+        console.log(`Retrying content fetch... Attempt ${retryCount + 1}/3`);
+        setTimeout(() => {
+          fetchContent(retryCount + 1);
+        }, (retryCount + 1) * 2000); // Exponential backoff: 2s, 4s, 6s
+        return;
+      }
+      
+      // If all retries failed, set default content
+      setContent({
+        schoolName: 'Shambil Pride Academy Birnin Gwari',
+        motto: 'Excellence in Education, Character Building, and Academic Achievement',
+        about: 'Welcome to Shambil Pride Academy Birnin Gwari. We are committed to providing quality education and nurturing young minds for a brighter future.',
+        history: 'Our school has been serving the community with dedication and excellence.',
+        aims: 'To provide comprehensive education that develops both academic excellence and moral character.',
+        gallery: []
+      });
+      setEditContent({
+        schoolName: 'Shambil Pride Academy Birnin Gwari',
+        motto: 'Excellence in Education, Character Building, and Academic Achievement',
+        about: 'Welcome to Shambil Pride Academy Birnin Gwari. We are committed to providing quality education and nurturing young minds for a brighter future.',
+        history: 'Our school has been serving the community with dedication and excellence.',
+        aims: 'To provide comprehensive education that develops both academic excellence and moral character.',
+        gallery: []
+      });
     } finally {
       setLoading(false);
+      setRetrying(false);
     }
   };
 
   const handleSaveContent = async () => {
     try {
-      await axios.put('/school-content', editContent);
+      await axios.put(`${API_BASE_URL}/school-content`, editContent);
       setContent(editContent);
       setIsEditing(false);
       
@@ -102,8 +136,15 @@ const Homepage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary-600"></div>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <h2 className="text-xl font-semibold text-gray-700 mb-2">Loading Shambil Pride Academy</h2>
+          <p className="text-gray-600">Please wait while we prepare the content for you...</p>
+          <div className="mt-4 text-sm text-gray-500">
+            <p>If this takes longer than expected, our server might be starting up.</p>
+          </div>
+        </div>
       </div>
     );
   }
