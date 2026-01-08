@@ -1,19 +1,24 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "public/**/*",
-      "use": "@vercel/static"
+  "env": {
+    "REACT_APP_API_URL": "https://shambil001.onrender.com/api",
+    "GENERATE_SOURCEMAP": "false",
+    "CI": "false"
+  },
+  "build": {
+    "env": {
+      "GENERATE_SOURCEMAP": "false"
     }
-  ],
-  "routes": [
+  },
+  "functions": {
+    "app/api/**/*.js": {
+      "runtime": "nodejs18.x"
+    }
+  },
+  "rewrites": [
     {
-      "src": "/(.*)",
-      "dest": "/public/$1"
-    },
-    {
-      "src": "/",
-      "dest": "/public/index.html"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
