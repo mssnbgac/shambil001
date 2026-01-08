@@ -1,19 +1,19 @@
 {
   "version": 2,
+  "buildCommand": "npm run build",
+  "outputDirectory": "build",
+  "installCommand": "npm install",
   "env": {
-    "REACT_APP_API_URL": "https://shambil001.onrender.com/api",
-    "GENERATE_SOURCEMAP": "false",
-    "CI": "false"
+    "REACT_APP_API_URL": "https://shambil001.onrender.com/api"
   },
-  "build": {
-    "env": {
-      "GENERATE_SOURCEMAP": "false"
-    }
-  },
-  "rewrites": [
+  "routes": [
     {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "src": "/static/(.*)",
+      "dest": "/static/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ]
 }
